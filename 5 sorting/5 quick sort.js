@@ -1,42 +1,34 @@
-/*Input: N = 5, Arr[] = {4,1,7,9,3}
-Output: {1, 3, 4, 7, 9}
-Explanation: After sorting the array in ascending order it becomes 1, 3, 4, 7, 9
-Input: N = 8, Arr[] = {4,6,2,5,7,9,1,3}
-Output: {1, 2, 3, 4, 5, 6, 7, 9}
-Explanation: After sorting the array in ascending order it becomes 1, 2, 3, 4, 5, 6, 7, 9 */
 
 let arr = [4,6,2,5,7,9,1,3]
 
-const partition=(arr,low,high)=>{
+const parition=(arr,low,high)=>{
+    let i = low;
+    let j = high;
     let pivot = arr[low]
-    let i = low
-    let j = high
     while(i<j){
-        while(arr[i]<= pivot && i<=high){
+        while(i<=high && arr[i]<=pivot ){
             i++
         }
-        while(arr[j]>pivot && j>=low){
+        while(j>=low && arr[j]>pivot){
             j--
         }
         if(i<j){
-            let temp = arr[j]
-            arr[j] = arr[i]
-            arr[i] = temp
+            let temp = arr[i]
+            arr[i] = arr[j]
+            arr[j] = temp
         }
     }
-        let temp = arr[j]
-        arr[j] = pivot
-        arr[low] = temp
-        return j
+    arr[low] = arr[j]
+    arr[j] = pivot
+    return j
 }
 
-const quickSort =(arr, low, high)=>{
+const qS=(arr,low,high)=>{
     if(low<high){
-        let partionIdx = partition(arr, low, high)
-        quickSort(arr,low,partionIdx-1)
-        quickSort(arr,partionIdx+1,high)
+        let partitionIdx = parition(arr,low,high)
+        qS(arr,low,partitionIdx-1)
+        qS(arr,partitionIdx+1,high)
     }
 }
-
-quickSort(arr,0,arr.length-1)
+qS(arr,0,arr.length-1)
 console.log(arr)
